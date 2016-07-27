@@ -1,13 +1,19 @@
 package mgraciano.jms.request;
 
+import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.jms.ConnectionFactory;
 import org.apache.camel.Endpoint;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.cdi.Uri;
+import org.apache.camel.component.jms.JmsComponent;
 
 @ApplicationScoped
 public class MyRoutes extends RouteBuilder {
+
+    @Resource(mappedName = "java:/ConnectionFactory")
+    private ConnectionFactory connectionFactory;
 
     @Inject
     @Uri("timer:foo?period=5000")
@@ -19,11 +25,15 @@ public class MyRoutes extends RouteBuilder {
 
     @Override
     public void configure() {
-        // you can configure the route rule with Java DSL here
+        JmsComponent component = new JmsComponent();
+        component.setConnectionFactory(connectionFactory);
+
+        getContext().addComponent("jms", component);
+
         from(inputEndpoint)
                 .to("bean:counterBean")
-//                .to("bean:messenger")
-                .to("jms:java:/jms/queue/ExpiryQueue")
+                //                .to("bean:messenger")
+                .to("jms:ExpiryQueue")
                 .to(resultEndpoint);
     }
 

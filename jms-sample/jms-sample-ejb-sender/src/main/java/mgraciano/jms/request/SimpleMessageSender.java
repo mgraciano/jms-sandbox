@@ -7,7 +7,6 @@ import javax.inject.Named;
 import javax.jms.Destination;
 import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSContext;
-import javax.jms.JMSException;
 import javax.jms.JMSProducer;
 import javax.jms.TextMessage;
 
@@ -35,7 +34,7 @@ public class SimpleMessageSender {
     @Resource(name = "java:/jms/queue/DLQ")
     private Destination reply;
 
-    public void sendMessage(final String text) throws JMSException {
+    public void sendMessage(final String text) throws Exception {
         final TextMessage message = context.createTextMessage("Mensagem de teste: " + text);
         message.setJMSReplyTo(reply);
 
@@ -43,7 +42,7 @@ public class SimpleMessageSender {
         producer.send(destination, message);
     }
 
-    public void sendMessage() throws JMSException {
+    public void sendMessage() throws Exception {
         final TextMessage message = context.createTextMessage("Mensagem de teste");
         message.setJMSReplyTo(reply);
 

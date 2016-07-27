@@ -22,7 +22,7 @@
     <dependencies>
         <dependency>
             <groupId>mgraciano</groupId>
-            <artifactId>jms-sample-ejb</artifactId>
+            <artifactId>jms-sample-ejb-sender</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
