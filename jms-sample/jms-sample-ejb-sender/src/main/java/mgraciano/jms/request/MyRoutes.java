@@ -25,14 +25,14 @@ public class MyRoutes extends RouteBuilder {
 
     @Override
     public void configure() {
-        JmsComponent component = new JmsComponent();
+        final JmsComponent component = new JmsComponent();
         component.setConnectionFactory(connectionFactory);
 
         getContext().addComponent("jms", component);
 
         from(inputEndpoint)
                 .to("bean:counterBean")
-                //                .to("bean:messenger")
+                //.to("bean:messenger")
                 .to("jms:ExpiryQueue")
                 .to(resultEndpoint);
     }

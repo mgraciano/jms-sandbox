@@ -1,5 +1,5 @@
 # jms-sandbox
-Sandbox for some JMS studies
+Sandbox for some JMS and Camel studies
 
 # Some errors and possible solutions
 
